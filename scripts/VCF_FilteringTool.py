@@ -114,6 +114,10 @@ def variant_passes(record, criteria):
             value = record.info.get(field, None)
             if value is None:
                 # 若欄位缺失即視為不符合
+                if field.upper() == "TLOD" or field.upper() == "DP":
+                    sys.stderr.write(
+                        f"Warning: Field '{field}' is missing in record at {record.chrom}:{record.pos}. Condition is not met.\n"
+                    )
                 return False
             # 注意: value 有時候可能為 list (例如多個等位基因的情況)
             if isinstance(value, (list, tuple)):
